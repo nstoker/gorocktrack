@@ -1,0 +1,11 @@
+{
+    "name": "Rocktrack",
+    "description":"Choose the songs to rehearse",
+    "keywords": [
+        "Rocksmith",
+        "Rocksmith 2014",
+        "Rocksmith 2014 Unplugged"
+    ],
+    "website": "http://gorocktrack.heroku.eu",
+    "repository": "http://github.com/nstoker/gorocktrack"
+}
