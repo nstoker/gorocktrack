@@ -15,3 +15,5 @@
 # vendor/
 /.docker_build/gorocktrack
 /.env
+/.test.env
+.vscode/
