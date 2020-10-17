@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 
+	"github.com/nstoker/gorocktrack/internal/pkg/version"
 	landing "github.com/nstoker/gorocktrack/internal/web/landing"
 )
 
@@ -18,7 +19,7 @@ func main() {
 		logrus.Fatal("Environment variable PORT missing")
 	}
 
-	logrus.Infof("Starting up")
+	logrus.Infof("Starting up %s", version.Version)
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", landing.PageHandler).Methods("GET")
