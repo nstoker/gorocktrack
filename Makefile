@@ -1,4 +1,12 @@
-GO_BUILD_ENV := CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+#!/usr/bin/make
+include .env
 
-run: 
-	go run cmd/server/server.go
+PROJECT_NAME=$(shell basename "$(PWD)")
+
+
+build:
+	go build -o bin/${PROJECT_NAME} cmd/server/server.go
+
+run: build
+	bin/$(PROJECT_NAME)
+

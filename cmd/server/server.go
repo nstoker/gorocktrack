@@ -1,42 +1,65 @@
 package main
 
 import (
-	"net/http"
 	"os"
 
-	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 
-	"github.com/nstoker/gorocktrack/internal/pkg/version"
-	landing "github.com/nstoker/gorocktrack/internal/web/landing"
+	"github.com/nstoker/gorocktrack/internal/pkg/controllers"
+	"github.com/nstoker/gorocktrack/internal/pkg/db"
+	"github.com/nstoker/gorocktrack/internal/pkg/localenv"
 )
 
-func main() {
-	godotenv.Load(".env")
+func checkenv() (string, string) {
 	port := os.Getenv("PORT")
 	if port == "" {
 		logrus.Fatal("Environment variable PORT missing")
 	}
 
-	logrus.Infof("Starting up %s", version.Version)
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		logrus.Fatal("Environment variable DATABASE_URL misssing")
+	}
 
-	r := mux.NewRouter()
-	r.HandleFunc("/", landing.PageHandler).Methods("GET")
-	r.PathPrefix("/static/").Handler(
-		http.StripPrefix("/static",
-			http.FileServer(http.Dir("./static"))))
-	r.PathPrefix("/vendor").Handler(
-		http.StripPrefix("/vendor",
-			http.FileServer(http.Dir("./static/vendor"))))
-	r.Use(loggingMiddleware)
-	logrus.Infof("Listening on %s", port)
-	logrus.Fatalln(http.ListenAndServe(":"+port, r))
+	if os.Getenv("ADMIN_EMAIL") == "" {
+		logrus.Fatal("Environment variable ADMIN_EMAIL missing")
+	}
+	if os.Getenv("ADMIN_NAME") == "" {
+		logrus.Fatal("Environment variable ADMIN_NAME missing")
+	}
+	if os.Getenv("ADMIN_PASS") == "" {
+		logrus.Fatal("Environment variable ADMIN_PASS missing")
+	}
+
+	return dsn, port
 }
 
-func loggingMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logrus.Println(r.RequestURI)
-		next.ServeHTTP(w, r)
-	})
+func main() {
+	logrus.Info("Checking environment")
+	localenv.SetEnvironment(".env")
+
+	logrus.Info("Initialising")
+
+	dsn, port := checkenv()
+
+	err := db.Migrate(dsn)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	logrus.Infof("Starting up")
+
+	s := controllers.Server{}
+
+	err = s.InitialiseDatabase(dsn)
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	err = s.InitialiseRouter()
+	if err != nil {
+		logrus.Error(err)
+	}
+
+	logrus.Fatalln(s.Run(port))
 }

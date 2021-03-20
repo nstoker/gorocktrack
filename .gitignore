@@ -18,3 +18,4 @@ out.txt
 /.env
 /.test.env
 .vscode/
+/out.txt
