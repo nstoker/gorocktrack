@@ -4,12 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
 	"github.com/nstoker/gorocktrack/internal/pkg/localenv"
 )
 
 var (
 	cookieHandler = securecookie.New(
 		[]byte(localenv.Hash), []byte(localenv.Block))
+	store = sessions.NewCookieStore([]byte(localenv.Hash)) // TODO: find out if this should be unique
 )
 
 func clearSession(w http.ResponseWriter) {

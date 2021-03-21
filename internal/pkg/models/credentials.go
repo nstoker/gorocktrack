@@ -8,7 +8,7 @@ type Credentials struct {
 	Password string `json:"password"`
 }
 
-// Signup with credentials
+// Signup with credentials TODO May move direct to model
 func (c *Credentials) Signup(name, email, password string) (bool, error) {
 	return false, fmt.Errorf("signups disabled")
 }

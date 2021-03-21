@@ -6,6 +6,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.14.1
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/securecookie v1.1.1 // indirect
+	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jmoiron/sqlx v1.2.0

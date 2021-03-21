@@ -9,10 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	dsn string
-	db  *sql.DB
-)
+type DBID uint64
 
 func init() {
 	localenv.SetEnvironment(".env")
@@ -33,6 +30,7 @@ func init() {
 	if err != nil {
 		logrus.Fatalf("db.init fatal ping %s", err)
 	}
+
 }
 
 // Migrate migrates the database.
