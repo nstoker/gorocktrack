@@ -19,3 +19,4 @@ out.txt
 /.test.env
 .vscode/
 /out.txt
+/bin/
