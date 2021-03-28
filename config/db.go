@@ -4,21 +4,29 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq"
+	"github.com/nstoker/gorocktrack/app"
 	"github.com/sirupsen/logrus"
 )
 
-var DB *sql.DB
+// var DB *sql.DB
 
-func init() {
+// InitDatabase initialises the database for use
+func InitDatabase() {
 	var err error
-	DB, err = sql.Open("postgres", databaseURI())
+	dsn := databaseURI()
+	app.DB, err = sql.Open("postgres", dsn)
 	if err != nil {
 		panic(err)
 	}
 
-	if err = DB.Ping(); err != nil {
+	if err = app.DB.Ping(); err != nil {
+		logrus.Errorf("databaseURI %+v", dsn)
 		panic(err)
 	}
 
-	logrus.Infoln("Database connection succesful")
+	if err = MigrateUp(dsn); err != nil {
+		logrus.Fatalf("migration failure: %v", err)
+	}
+
+	seed()
 }
