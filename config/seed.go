@@ -8,7 +8,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func seed() {
+// SeedDatabase populates database with key values
+func SeedDatabase() {
 	seed_admin()
 }
 

@@ -12,10 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Part 2 completed.
 - Table migration configured.
 - Basic user model and seeder created.
+- Save records with a hashed password
 
 ### ERRORS
 
 1. The password should be encrypted. So...
+1. Need to have show/edit for user.
+1. Need to have an authorization so (for example) the users list doesn't display.
+1. Create a separate folder for each of the data elements? eg `models/user/` `models/songs` and so on?
+1. To create independant homepages with user logged in. The cookie should have the user id embedded.
 
 ## v0.0.1 2020-10-17
 

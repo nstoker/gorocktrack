@@ -1,9 +1,12 @@
 package model
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"github.com/nstoker/gorocktrack/app"
 	"github.com/sirupsen/logrus"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // Users structure for normal user access
@@ -27,14 +30,8 @@ func (u *User) Admin() (bool, error) {
 	return isAdmin, err
 }
 
-// Find finds a user based on the ID
-// func(u*User)Find error {
-// 	u=User{}
-// 	return fmt.Errorf("not implemented")
-// }
-
-// ShowAllUsers TODO: Needs a check for admin authentication
-func ShowAllUsers() ([]User, error) {
+// GetAllUsers TODO: Needs a check for admin authentication
+func GetAllUsers() ([]User, error) {
 	rows, err := app.DB.Query("SELECT id, name, email FROM users")
 	if err != nil {
 		logrus.Errorf("ShowAllUsers failed %v", err)
@@ -67,6 +64,21 @@ func FindByEmail(email string) (*User, error) {
 	return u, err
 }
 
+func FindByEmailAndPassword(email, password string) (*User, error) {
+	sql := `SELECT id,name,email FROM users WHERE email=$1 AND password=$2`
+	u := &User{}
+	hashedPassword, err := hashAndSalt([]byte(password))
+	if err != nil {
+		return nil, err
+	}
+
+	row := app.DB.QueryRow(sql, email, hashedPassword)
+	err = row.Scan(&u.ID, &u.Name, &u.Email)
+	logrus.Info(err)
+
+	return nil, fmt.Errorf("testing")
+}
+
 // AddNewUser to the system
 func AddNewUser(name, email, password string) (*User, error) {
 	return AddAdminUser(name, email, password, false)
@@ -75,9 +87,16 @@ func AddNewUser(name, email, password string) (*User, error) {
 // AddAdminUser to the system
 func AddAdminUser(name, email, password string, admin bool) (*User, error) {
 	sql := `INSERT INTO users(name,email,password,admin) VALUES ($1, $2, $3, $4);`
+	hashedPassword, err := hashAndSalt([]byte(password))
+	if err != nil {
+		return nil, err
+	}
 
 	user := &User{}
-	_, err := app.DB.Exec(sql, name, email, password, admin)
+	if app.DB == nil {
+		return user, fmt.Errorf("database not set")
+	}
+	_, err = app.DB.Exec(sql, name, email, hashedPassword, admin)
 	if err != nil {
 		logrus.Warnf("returning error %v", err)
 		return user, err
@@ -89,4 +108,14 @@ func AddAdminUser(name, email, password string, admin bool) (*User, error) {
 	}
 
 	return user, nil
+}
+
+func hashAndSalt(pwd []byte) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.DefaultCost)
+	if err != nil {
+		logrus.Error(err)
+		return "", err
+	}
+
+	return string(hash), nil
 }

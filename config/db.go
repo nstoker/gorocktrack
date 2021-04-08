@@ -27,6 +27,4 @@ func InitDatabase() {
 	if err = MigrateUp(dsn); err != nil {
 		logrus.Fatalf("migration failure: %v", err)
 	}
-
-	seed()
 }

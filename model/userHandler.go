@@ -8,7 +8,7 @@ import (
 )
 
 func UserIndex(w http.ResponseWriter, r *http.Request) {
-	users, err := ShowAllUsers()
+	users, err := GetAllUsers()
 	if err != nil {
 		logrus.Errorf("UserIndex: %s", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
