@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- to clear security issues
+  - go mod tidy
+  - npm audit fix (may need npm audit fix --force)
+
 ## v0.0.1 2020-10-17
 
 - Basic landing page added.
