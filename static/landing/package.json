@@ -30,7 +30,7 @@
         "url": "https://github.com/BlackrockDigital/startbootstrap-coming-soon.git"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "6.2.0",
+        "@fortawesome/fontawesome-free": "6.2.1",
         "bootstrap": "5.2.2",
         "chokidar": "^3.5.3",
         "jquery": "3.6.1"
