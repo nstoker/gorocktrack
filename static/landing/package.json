@@ -36,10 +36,10 @@
         "jquery": "3.6.3"
     },
     "devDependencies": {
-        "browser-sync": "^2.27.5",
+        "browser-sync": "2.27.11",
         "del": "7.0.0",
-        "glob-watcher": "^2.0.0",
-        "gulp": "^3.9.1",
+        "glob-watcher": "^5.0.5",
+        "gulp": "^4.0.2",
         "gulp-autoprefixer": "^6.1.0",
         "gulp-clean-css": "4.3.0",
         "gulp-header": "2.0.9",
@@ -47,7 +47,8 @@
         "gulp-rename": "2.0.0",
         "gulp-sass": "5.1.0",
         "gulp-uglify": "3.0.2",
-        "merge-stream": "2.0.0"
+        "merge-stream": "2.0.0",
+        "ua-parser-js": "1.0.33"
     },
     "resolutions": {}
 }
