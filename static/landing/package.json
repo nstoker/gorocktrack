@@ -30,7 +30,7 @@
         "url": "https://github.com/BlackrockDigital/startbootstrap-coming-soon.git"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "6.4.0",
+        "@fortawesome/fontawesome-free": "^6.5.1",
         "bootstrap": "5.3.1",
         "chokidar": "^3.5.3",
         "jquery": "3.7.0"
@@ -40,7 +40,7 @@
         "del": "7.0.0",
         "glob-watcher": "^5.0.5",
         "gulp": "^4.0.2",
-        "gulp-autoprefixer": "^6.1.0",
+        "gulp-autoprefixer": "^8.0.0",
         "gulp-clean-css": "4.3.0",
         "gulp-header": "2.0.9",
         "gulp-plumber": "1.2.1",
