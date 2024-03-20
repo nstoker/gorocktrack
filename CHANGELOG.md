@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+!! `npm install -f`
+
 - to clear security issues
   - go mod tidy
-  - npm audit fix (may need npm audit fix --force)
+  - npm audit fix
   - update fontawesome
 
 ## v0.0.1 2020-10-17

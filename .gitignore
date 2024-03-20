@@ -17,4 +17,4 @@
 /.env
 /.test.env
 .vscode/
-/static/landing/node_modules/
+static/landing/node_modules
